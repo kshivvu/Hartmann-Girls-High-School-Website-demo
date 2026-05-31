@@ -2,13 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nav, school } from "@/lib/content";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 60);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
   return (
-    <header className="site-header">
+    <header className={scrolled ? "site-header scrolled" : "site-header"}>
       <div className="nav-shell">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
           <Image src="/images/crest.png" alt="" width={58} height={58} priority />
