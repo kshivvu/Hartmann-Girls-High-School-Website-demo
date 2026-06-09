@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import { Marquee } from "@/components/Marquee";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import "./styles.css";
 
 const body = Plus_Jakarta_Sans({ subsets: ["latin"], variable: "--font-body" });
@@ -14,7 +15,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${body.variable} ${display.variable}`}><Marquee />{children}</body>
+      <body className={`${body.variable} ${display.variable}`}>
+        <ScrollProgress />
+        <Marquee />
+        {children}
+      </body>
     </html>
   );
 }

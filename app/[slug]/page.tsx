@@ -2,8 +2,12 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import { AdmissionsPage } from "@/components/AdmissionsPage";
-import { GalleryLightbox } from "@/components/GalleryLightbox";
-import { facilities, gallery, notices, school, toppers } from "@/lib/content";
+import { AboutPage } from "@/components/AboutPage";
+import { AcademicsPage } from "@/components/AcademicsPage";
+import { FacilitiesPage } from "@/components/FacilitiesPage";
+import { ContactPage } from "@/components/ContactPage";
+import { GalleryPage } from "@/components/GalleryPage";
+import { notices, toppers } from "@/lib/content";
 
 const pages = {
   about: { eyebrow: "About Hartmann", title: "A tradition of purpose.", intro: "Established in 1959 by the Sisters of Notre Dame, Hartmann Girls' High School has served generations of young women in Patna with an education rooted in faith, knowledge and service." },
@@ -28,12 +32,15 @@ export default async function ContentPage({ params }: { params: Promise<{ slug: 
 }
 
 function PageBody({ slug }: { slug: string }) {
-  if (slug === "gallery") return <section className="content-section shell"><GalleryLightbox images={gallery} /></section>;
-  if (slug === "results") return <section className="content-section shell"><h2>Listed board toppers</h2><div className="content-grid">{toppers.map((student) => <article className="content-card" key={`${student.name}-${student.year}`}><Image src={student.image} width={110} height={110} alt={student.name} style={{ objectFit: "cover", borderRadius: "50%" }} /><h3>{student.name}</h3><p><b>{student.score}</b> · {student.detail} · {student.year}</p></article>)}</div></section>;
-  if (slug === "facilities") return <section className="content-section shell"><h2>Spaces for learning</h2><div className="content-grid">{facilities.map(([title, copy]) => <article className="content-card" key={title}><h3>{title}</h3><p>{copy}</p></article>)}</div></section>;
-  if (slug === "news") return <section className="content-section shell"><h2>Current notices</h2><div className="content-grid">{notices.map((notice) => <article className="content-card" key={notice}><p className="eyebrow">Admissions · 2026-27</p><h3>{notice}</h3><p>Please contact the school office for the official notice and current details.</p></article>)}</div></section>;
-  if (slug === "contact") return <section className="content-section shell"><h2>School office</h2><div className="content-grid"><article className="content-card"><h3>Address</h3><p>{school.address}</p></article><article className="content-card"><h3>Call us</h3><p><a href={`tel:${school.phone}`}>{school.phone}</a></p></article><article className="content-card"><h3>Email us</h3><p><a href={`mailto:${school.email}`}>{school.email}</a></p></article></div><p>The postal address shown here follows the school&apos;s current public website and should be confirmed with the school before launch.</p></section>;
+  if (slug === "about") return <AboutPage />;
+  if (slug === "academics") return <AcademicsPage />;
   if (slug === "admissions") return <AdmissionsPage />;
-  if (slug === "academics") return <section className="content-section shell"><h2>A disciplined foundation</h2><p>Our academic programme is shaped by Bihar Board requirements and strengthened by practical learning, attentive teaching and opportunities for creative expression.</p><div className="content-grid"><article className="content-card"><h3>Bihar Board</h3><p>A clear academic pathway aligned with BSEB.</p></article><article className="content-card"><h3>Practical Learning</h3><p>Laboratories and activities connect ideas to experience.</p></article><article className="content-card"><h3>Holistic Growth</h3><p>Music, drawing, sports and values complement classroom study.</p></article></div></section>;
-  return <section className="content-section shell"><h2>Rooted in service</h2><p>Hartmann Girls&apos; High School was established in 1959 by the Sisters of Notre Dame. It became a higher secondary school in 1967 and continues its mission of educating young women with discipline, compassion and confidence.</p><div className="content-grid"><article className="content-card"><h3>Our Mission</h3><p>To foster an environment where knowledge, values and service grow together.</p></article><article className="content-card"><h3>Our Vision</h3><p>To help every student develop the courage and character to contribute meaningfully.</p></article><article className="content-card"><h3>Our Leadership</h3><p>Led by Principal Sr. Mary Vidhya, SND, in the tradition of the Sisters of Notre Dame.</p></article></div></section>;
+  if (slug === "facilities") return <FacilitiesPage />;
+  if (slug === "contact") return <ContactPage />;
+  if (slug === "gallery") return <GalleryPage />;
+  
+  if (slug === "results") return <section className="content-section shell"><h2>Listed board toppers</h2><div className="content-grid">{toppers.map((student) => <article className="content-card" key={`${student.name}-${student.year}`}><Image src={student.image} width={110} height={110} alt={student.name} style={{ objectFit: "cover", borderRadius: "50%" }} /><h3>{student.name}</h3><p><b>{student.score}</b> · {student.detail} · {student.year}</p></article>)}</div></section>;
+  if (slug === "news") return <section className="content-section shell"><h2>Current notices</h2><div className="content-grid">{notices.map((notice) => <article className="content-card" key={notice}><p className="eyebrow">Admissions · 2026-27</p><h3>{notice}</h3><p>Please contact the school office for the official notice and current details.</p></article>)}</div></section>;
+  
+  return notFound();
 }

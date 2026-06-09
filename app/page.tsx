@@ -6,6 +6,9 @@ import { GalleryLightbox } from "@/components/GalleryLightbox";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { CountUp } from "@/components/CountUp";
 import { Reveal, StaggerReveal } from "@/components/Reveal";
+import { QuickAccessTriptych } from "@/components/QuickAccessTriptych";
+import { PeopleSlider } from "@/components/PeopleSlider";
+import { SocialFeed } from "@/components/SocialFeed";
 import { facilities, gallery, notices, toppers } from "@/lib/content";
 
 export default function Home() {
@@ -18,27 +21,21 @@ export default function Home() {
         <div className="hero-content shell">
           <p className="hero-kicker"><span></span> A legacy of learning since 1959</p>
           <h1>67 Years of<br /><em>Shaping Bihar&apos;s</em><br />Daughters</h1>
-          <p className="hero-intro">A Catholic institution of faith, discipline, and academic excellence in Digha, Patna.</p>
+          <p className="hero-intro">A Catholic institution of faith, discipline and academic excellence in Digha, Patna.</p>
           <div className="hero-actions"><Link className="button gold" href="/admissions">Apply for Admission <span>→</span></Link><Link className="button outline" href="/about">Our History</Link></div>
         </div>
         <div className="hero-bottom"><div className="shell"><span>Bihar Board Affiliated</span><span>Est. 1959</span><span>Catholic Institution</span><span>Digha, Patna</span></div></div>
       </section>
 
-      <section className="stats">
-        <div className="shell stats-grid">
+      <Reveal direction="none" className="stats"><div className="shell stats-grid">
           <div><CountUp end={95} suffix="%" /><span>2025-26 Top Score</span></div>
           <div><CountUp end={67} suffix="+" /><span>Years of Excellence</span></div>
           <div><CountUp end={1959} duration={1700} /><span>Established in Patna</span></div>
           <div><strong>BSEB</strong><span>Bihar Board Affiliated</span></div>
         </div>
-      </section>
+      </Reveal>
 
-      <StaggerReveal className="quick shell">
-        <Link href="/admissions" className="quick-card maroon"><small>01 · ADMISSIONS</small><h2>Begin her Hartmann journey.</h2><span>Apply for 2026-27 →</span></Link>
-        <Link href="/results" className="quick-card ochre"><small>02 · RESULTS</small><h2>Excellence, year after year.</h2><span>Meet our toppers →</span></Link>
-        <Link href="/news" className="quick-card charcoal"><small>03 · SCHOOL LIFE</small><h2>Stay close to campus.</h2><span>News & events →</span></Link>
-        <div className="quick-links-band"><Link href="/news">Notices & Announcements</Link><Link href="/contact">Visit Us — Digha, Patna</Link><Link href="/academics">Academic Information</Link></div>
-      </StaggerReveal>
+      <Reveal><QuickAccessTriptych /></Reveal>
 
       <section className="about-section">
         <div className="shell about-grid">
@@ -48,6 +45,31 @@ export default function Home() {
             <h2>Where faith meets <em>excellence.</em></h2>
             <p>Hartmann Girls&apos; High School is a Catholic institution established in 1959 by the Sisters of Notre Dame. For over six decades, it has nurtured generations of young women from Patna through values-based education, academic rigour, and a deep sense of community.</p>
             <Link className="text-link" href="/about">Discover our story <span>→</span></Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Mission & Values strip */}
+      <section className="home-mission-strip">
+        <div className="shell strip-grid">
+          <Reveal className="strip-content">
+            <p className="eyebrow light">Our Foundation</p>
+            <h2>Rooted in Faith, Shaped for <em>Service</em></h2>
+            <p>At Hartmann, education is more than academic performance. It is a journey of forming character, developing a conscious mind, and learning to serve the community with grace and confidence.</p>
+            <div className="strip-badges">
+              <div className="strip-badge">
+                <strong>Faith</strong>
+                <span>Spiritual guidance</span>
+              </div>
+              <div className="strip-badge">
+                <strong>Discipline</strong>
+                <span>Self-conduct & focus</span>
+              </div>
+              <div className="strip-badge">
+                <strong>Service</strong>
+                <span>Compassion in action</span>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -65,7 +87,7 @@ export default function Home() {
       <section className="toppers section">
         <div className="shell">
           <Reveal className="split-heading"><div><p className="eyebrow">Our toppers</p><h2>Quiet effort.<br /><em>Remarkable results.</em></h2></div><Link className="text-link light" href="/results">View all achievements <span>→</span></Link></Reveal>
-          <StaggerReveal className="topper-grid">{toppers.map((topper, index) => <article className={index === 0 ? "topper-card featured" : "topper-card"} key={`${topper.name}-${topper.year}`}>
+          <StaggerReveal className="topper-grid">{toppers.map((topper, index) => <article className="topper-card" key={`${topper.name}-${topper.year}`}>
             <Image src={topper.image} width={160} height={160} alt={topper.name} />
             <div><small>{topper.year} · {topper.detail}</small><h3>{topper.name}</h3><strong>{topper.score}</strong></div>
           </article>)}</StaggerReveal>
@@ -79,6 +101,8 @@ export default function Home() {
         </div>
       </section>
 
+      <PeopleSlider />
+
       <section className="facilities shell section">
         <Reveal className="section-heading"><p className="eyebrow">School infrastructure</p><h2>Spaces that invite<br /><em>curiosity.</em></h2></Reveal>
         <StaggerReveal className="facility-grid">{facilities.map(([title, copy, number, image]) => <article key={title}><div className="facility-photo"><Image src={image} alt="" fill sizes="(max-width: 800px) 50vw, 33vw" /></div><div className="facility-copy"><span>{number}</span><h3>{title}</h3><p>{copy}</p></div></article>)}</StaggerReveal>
@@ -90,10 +114,27 @@ export default function Home() {
         <div className="shell notice-grid"><Reveal direction="left"><p className="eyebrow">Notice board</p><h2>Latest from<br /><em>Hartmann.</em></h2><Link className="text-link" href="/news">All notices <span>→</span></Link></Reveal><StaggerReveal>{notices.map((notice, index) => <Link href="/admissions" key={notice} className="notice"><small>ADMISSIONS · 2026-27</small><h3>{notice}</h3><span>Read notice →</span><b>0{index + 1}</b></Link>)}</StaggerReveal></div>
       </section>
 
+      {/* Bottom CTA */}
+      <section className="home-bottom-cta section">
+        <div className="shell cta-inner">
+          <Reveal className="cta-content text-center">
+            <p className="eyebrow">Join Our Community</p>
+            <h2>Begin Her Academic Journey Today</h2>
+            <p className="cta-lead">Admissions are open for the academic session 2026-27. Connect with our admissions desk to learn more about registration and procedures.</p>
+            <div className="cta-buttons">
+              <Link href="/admissions" className="button gold">Apply for Admission <span>→</span></Link>
+              <Link href="/contact" className="button outline">Enquire Now</Link>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="gallery-section section shell">
         <Reveal className="split-heading"><div><p className="eyebrow">Life at Hartmann</p><h2>Moments from<br /><em>our community.</em></h2></div><Link className="text-link" href="/gallery">View all photographs <span>→</span></Link></Reveal>
-        <GalleryLightbox images={gallery.slice(0, 6)} preview />
+        <Reveal direction="up"><GalleryLightbox images={gallery.slice(0, 6)} preview /></Reveal>
       </section>
+
+      <SocialFeed />
     </main>
     <SiteFooter />
   </>;

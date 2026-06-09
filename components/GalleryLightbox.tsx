@@ -18,9 +18,9 @@ export function GalleryLightbox({ images, preview = false }: { images: string[];
         <Image src={src} alt="Hartmann school event" fill sizes={preview ? "(max-width: 700px) 50vw, 33vw" : "(max-width: 800px) 50vw, 25vw"} />
       </button>)}
     </div>
-    {active && <div className="lightbox" role="dialog" aria-modal="true" aria-label="Gallery photograph" onClick={() => setActive(null)}>
+    <div className={`lightbox-overlay ${active ? "open" : ""}`} role="dialog" aria-modal="true" aria-label="Gallery photograph" onClick={() => setActive(null)} aria-hidden={!active}>
       <button className="lightbox-close" onClick={() => setActive(null)} aria-label="Close photograph">×</button>
-      <Image src={active} alt="Hartmann school event" fill sizes="90vw" onClick={(event) => event.stopPropagation()} />
-    </div>}
+      {active && <Image key={active} src={active} alt="Hartmann school event" fill sizes="90vw" onClick={(event) => event.stopPropagation()} />}
+    </div>
   </>;
 }

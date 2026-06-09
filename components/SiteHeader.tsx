@@ -8,14 +8,18 @@ import { nav, school } from "@/lib/content";
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
-    const update = () => setScrolled(window.scrollY > 60);
+    const update = () => {
+      setScrolled(window.scrollY > 60);
+    };
     update();
     window.addEventListener("scroll", update, { passive: true });
     return () => window.removeEventListener("scroll", update);
   }, []);
+
   return (
-    <header className={scrolled ? "site-header scrolled" : "site-header"}>
+    <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
       <div className="nav-shell">
         <Link href="/" className="brand" onClick={() => setOpen(false)}>
           <Image src="/images/crest.png" alt="" width={58} height={58} priority />
